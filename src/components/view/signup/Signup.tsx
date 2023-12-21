@@ -11,19 +11,16 @@ import FormInput from "@/components/ui/forms/InputForm";
 import MyButton from "@/components/ui/button/Button";
 import { getBaseUrl } from "@/helpers/config/envConfig";
 import { useCreateUserMutation } from "@/redux/api/authApi";
+import { IUser } from "@/types/common";
 
-type FormValues = {
-  name: string;
-  email: string;
-  password: string;
-};
+
 
 const SingUpPage = () => {
   const router = useRouter();
 
   const [createUser, { error, isLoading }] = useCreateUserMutation();
 
-  const onSubmit: SubmitHandler<FormValues> = async (values: any) => {
+  const onSubmit: SubmitHandler<IUser> = async (values: IUser) => {
     const { fullName, email, password } = values;
     const userData = {
       fullName,
