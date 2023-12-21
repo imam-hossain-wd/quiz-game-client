@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -8,33 +9,43 @@ import Link from "next/link";
 import Form from "@/components/ui/forms/From";
 import FormInput from "@/components/ui/forms/InputForm";
 import MyButton from "@/components/ui/button/Button";
-
+import { getBaseUrl } from "@/helpers/config/envConfig";
+import { useCreateUserMutation } from "@/redux/api/authApi";
 
 type FormValues = {
-  Email: string;
+  name: string;
+  email: string;
   password: string;
 };
 
 const SingUpPage = () => {
-
-
   const router = useRouter();
 
+  const [createUser, { error, isLoading }] = useCreateUserMutation();
 
-  const onSubmit: SubmitHandler<FormValues> =async (values: any) =>{
-   const {fullName,email,password} = values;
-   const userData = {
-    fullName,
-    email,
-    password
-   } 
+  const onSubmit: SubmitHandler<FormValues> = async (values: any) => {
+    const { fullName, email, password } = values;
+    const userData = {
+      fullName,
+      email,
+      password,
+    };
+
     try {
-      message.loading("Creating User")
-
+      const res =await createUser(userData);
+      //@ts-ignore
+      const result = res?.data;
+      if(result?.success === true){
+        message.loading("Creating User");
+        message.success(result.message)
+        router.push('/login')
+      }
+      
     } catch (error) {
       console.log(error);
     }
   };
+
 
   return (
     <div className=" p-5 mt-10">
@@ -48,7 +59,9 @@ const SingUpPage = () => {
         }}
       >
         <div>
-          <h2 className="text-center  p-2 w-full lg:w-72 mx-auto">Create An Account</h2>
+          <h2 className="text-center  p-2 w-full lg:w-72 mx-auto">
+            Create An Account
+          </h2>
           <p className="text-sm text-center w-full lg:w-72 mx-auto mb-2">
             Create an account to enjoy all the services without any ads for
             free!
@@ -64,7 +77,7 @@ const SingUpPage = () => {
                 placeholder="Full Name"
               />
             </div>
-            
+
             <div className="">
               <FormInput
                 name="email"
@@ -72,6 +85,12 @@ const SingUpPage = () => {
                 size="large"
                 placeholder="Email"
               />
+               <span className="ml-3 text-sm mt-3 text-red-500">
+               
+                  { //@ts-ignore
+                  error && error?.data?.message
+                  }
+                </span>
             </div>
 
             <div className="">
@@ -84,7 +103,7 @@ const SingUpPage = () => {
             </div>
           </div>
           <div className="flex justify-center">
-            <MyButton  name="Create Account" className="w-full mt-4 h-9"/>
+            <MyButton name="Create Account" className="w-full mt-4 h-9" />
           </div>
           <p className="text-sm text-center mt-3 ">
             Already Have An Account?{" "}
