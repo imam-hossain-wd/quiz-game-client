@@ -1,51 +1,52 @@
-"use client"
+"use client";
 
 import MyButton from "@/components/ui/button/Button";
 import Form from "@/components/ui/forms/From";
 import FormInput from "@/components/ui/forms/InputForm";
 import { useLogInUserMutation } from "@/redux/api/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { setAccessToken } from "@/redux/slice/authSlice";
 import { ILogInData } from "@/types/common";
+import { storeUserInto } from "@/utils/auth.services";
 import { message } from "antd";
 import Link from "next/link";
 import { SubmitHandler } from "react-hook-form";
 
-
-
 const Login = () => {
+  const dispatch = useAppDispatch();
 
-    const [logInUser]= useLogInUserMutation()
-  
+  const [logInUser, {error}] = useLogInUserMutation();
+
   const onSubmit: SubmitHandler<ILogInData> = async (data: any) => {
-   
     const loginData = {
-        email:data?.email,
-        password:data?.password
-    }
-   
+      email: data?.email,
+      password: data?.password,
+    };
+
     try {
+      const res = await logInUser(loginData);
+      //@ts-ignore
+      const result = res?.data;
+      console.log(result, 'rslt...');
 
-        const res = await logInUser(loginData)
-        //@ts-ignore
-        const result = res?.data;
-
-        if(result?.success === true && result?.token){
-            message.success(result.message)
-            console.log(result.token);
-        }
-
+      if (result?.success === true && result?.token) {
+        message.success(result.message);
+        storeUserInto({ accessToken: result.token });
+        dispatch(setAccessToken(result.token));
+      }
     } catch (error: any) {
       console.error(error.message);
     }
   };
 
-
+//@ts-ignore
+  const ErrorMesage = error && error.data.message
 
 
   return (
     <div className="bg-white border-2 border-gray-200 mt-24">
       <div className="">
-  
-      <div
+        <div
           className="w-full lg:w-[30%] mx-auto bg-[#E1F3E4] drop-shadow-2xl p-5 rounded-lg"
           style={{
             border: "1px solid #d9d9d9",
@@ -69,10 +70,9 @@ const Login = () => {
                   size="large"
                   placeholder="Email"
                 />
-                
-                {/* <span className="text-sm text-red-500 mt-2">{error && 
-                //@ts-ignore
-                error?.data?.message === "user does not exist" && error?.data?.message }</span> */}
+
+                <span className="text-sm text-red-500 mt-2">{ErrorMesage && 
+                ErrorMesage === "User not found" && ErrorMesage }</span>
               </div>
 
               <div className="mb-5">
@@ -82,17 +82,15 @@ const Login = () => {
                   size="large"
                   placeholder="Strong Password"
                 />
-                 {/* <span className="text-sm text-red-500 mt-2">{error && 
-                 //@ts-ignore
-                 error?.data?.message === "Password is incorrect" && error?.data?.message }</span> */}
+                <span className="text-sm text-red-500 mt-2">{ErrorMesage && 
+                ErrorMesage === "Password is incorrect" && ErrorMesage }</span>
               </div>
             </div>
             <div className="flex justify-center">
-
-              
-          <MyButton name="Log In"
-      className="text-md h-8 flex justify-center items-center w-full bg-primary" />
-
+              <MyButton
+                name="Log In"
+                className="text-md h-8 flex justify-center items-center w-full bg-primary"
+              />
             </div>
             <div className="mt-5 flex justify-center">
               <p className="text-[12px] font-semibold">
