@@ -50,7 +50,7 @@ const Login = () => {
     <div className="bg-white border-2 border-gray-200 mt-24">
       <div className="">
         <div
-          className="w-full lg:w-[30%] mx-auto bg-[#E1F3E4] drop-shadow-2xl p-5 rounded-lg"
+          className="w-full lg:w-[30%] mx-auto bg-white drop-shadow-2xl p-5 rounded-lg"
           style={{
             border: "1px solid #d9d9d9",
             borderRadius: "5px",

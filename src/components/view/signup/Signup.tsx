@@ -104,7 +104,7 @@ const SingUpPage = () => {
           </div>
           <p className="text-sm text-center mt-3 ">
             Already Have An Account?{" "}
-            <Link className="text-red-500" href="/login">
+            <Link className="text-primary" href="/login">
               Log In
             </Link>
           </p>
