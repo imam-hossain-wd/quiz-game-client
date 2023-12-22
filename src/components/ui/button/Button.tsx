@@ -3,7 +3,7 @@ import { Button } from 'antd';
 
 
 type IButton = {
-    name:string,
+    name:string | any,
     className:string,
     props?:string
 }

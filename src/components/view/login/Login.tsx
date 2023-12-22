@@ -4,18 +4,22 @@ import MyButton from "@/components/ui/button/Button";
 import Form from "@/components/ui/forms/From";
 import FormInput from "@/components/ui/forms/InputForm";
 import { useLogInUserMutation } from "@/redux/api/authApi";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setAccessToken } from "@/redux/slice/authSlice";
 import { ILogInData } from "@/types/common";
 import { storeUserInto } from "@/utils/auth.services";
 import { message } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 
 const Login = () => {
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
   const [logInUser, {error}] = useLogInUserMutation();
+
+  const router = useRouter();
+
 
   const onSubmit: SubmitHandler<ILogInData> = async (data: any) => {
     const loginData = {
@@ -27,12 +31,11 @@ const Login = () => {
       const res = await logInUser(loginData);
       //@ts-ignore
       const result = res?.data;
-      console.log(result, 'rslt...');
-
       if (result?.success === true && result?.token) {
         message.success(result.message);
         storeUserInto({ accessToken: result.token });
         dispatch(setAccessToken(result.token));
+        router.push("/")
       }
     } catch (error: any) {
       console.error(error.message);
@@ -40,7 +43,7 @@ const Login = () => {
   };
 
 //@ts-ignore
-  const ErrorMesage = error && error.data.message
+  const ErrorMesage = error && error?.data?.message
 
 
   return (
