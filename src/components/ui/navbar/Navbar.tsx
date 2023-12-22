@@ -1,6 +1,7 @@
 "use client";
 import {
   CloseOutlined,
+  HomeOutlined,
   LoginOutlined,
   MenuOutlined,
   UserOutlined,
@@ -43,8 +44,11 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav>
-      <div className="flex justify-end items-center mr-10 mt-5">
+    <nav className="bg-primary p-2">
+      <div className="flex  justify-end items-center mr-10">
+    <div className="text-2xl text-white">
+    <Link className=" text-white mr-4" href="/"><HomeOutlined /></Link>
+    </div>
        {!accessToken ? <Button
           name="login"
           className="bg-primary hover:bg-white hover:text-primary hover:border-primary hover:border text-lg text-white w-24 h-10 flex justify-center items-center rounded-lg mr-5  "
