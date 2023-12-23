@@ -1,10 +1,7 @@
+import Account from "@/components/view/dashboard/account/Account";
 
 const AccountPage = () => {
-    return (
-        <div>
-            <h1>Account page..</h1>
-        </div>
-    );
+    return <Account />
 };
 
 export default AccountPage;
