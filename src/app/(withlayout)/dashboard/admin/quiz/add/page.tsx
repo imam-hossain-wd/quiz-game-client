@@ -1,5 +1,5 @@
-import QuizAdd from "@/components/view/dashboard/quiz/QuizAdd";
 
+import QuizAdd from "@/components/view/dashboard/quiz/QuizAdd";
 
 const QuizAddPage = () => {
     return <QuizAdd />
