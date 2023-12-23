@@ -10,7 +10,7 @@ import { ILogInData } from "@/types/common";
 import { storeUserInto } from "@/utils/auth.services";
 import { message } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 
 const Login = () => {
@@ -27,6 +27,8 @@ const Login = () => {
       password: data?.password,
     };
 
+    const redirectAfterLogin = sessionStorage.getItem('redirectAfterLogin');
+
     try {
       const res = await logInUser(loginData);
       //@ts-ignore
@@ -37,6 +39,7 @@ const Login = () => {
         dispatch(setAccessToken(result.token));
         router.push("/")
       }
+     
     } catch (error: any) {
       console.error(error.message);
     }

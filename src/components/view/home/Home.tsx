@@ -3,10 +3,10 @@
 import MyButton from "@/components/ui/button/Button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setAccessToken } from "@/redux/slice/authSlice";
-import { authKey } from "@/utils/auth.services";
+import { authKey, getUserInfo } from "@/utils/auth.services";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import { Button, message } from "antd";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 
 const HomePage = () => {
@@ -17,16 +17,19 @@ const HomePage = () => {
 
   const router = useRouter();
 
-  const handleSubmit = ()=> {
 
+  const handleSubmit = ()=> {
     accessToken &&  router.push('/quiz-category')
 
    if(!accessToken){
     message.error("You are not Authorized ! Please login")
     router.push('/login')
    }
+
   
   }
+
+
   return (
     <div className="flex w-3/6 mx-auto mt-5 flex-col justify-center items-center">
       <h1
@@ -44,21 +47,14 @@ const HomePage = () => {
         </li>
         <li>Result will be declared at the end of the quiz</li>
       </ul>
-
-      {/* <Link href="/quiz-category"> */}
-        <Button
-        onClick={handleSubmit}
-        type="primary" className="mt-5">
-          Start Quiz
-        </Button>
-      {/* </Link> */}
-      {/* <Link href="/quiz-category">
-        <MyButton
+       <div onClick={handleSubmit}>
+       <MyButton
         
-          name="Start Quiz"
-          className="w-40 h-10 text-lg font-semibold mt-5"
-        />
-      </Link> */}
+        name="Start Quiz"
+        className="w-40 h-10 text-lg font-semibold mt-5"
+      />
+       </div>
+   
     </div>
   );
 };
