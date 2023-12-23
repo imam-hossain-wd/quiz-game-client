@@ -1,11 +1,8 @@
+import Quiz from "@/components/view/dashboard/quiz/Quiz";
 
 
 const QuizPage = () => {
-    return (
-        <div>
-            <h1>Quiz page...</h1>
-        </div>
-    );
+    return <Quiz />
 };
 
 export default QuizPage;
