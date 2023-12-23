@@ -1,11 +1,7 @@
+import Dashboard from "@/components/view/dashboard/dashboard/Dashboard";
 
 const DashboardPage = () => {
-    // perfomer
-    return (
-        <div>
-            <h1>Dashboard page..</h1>
-        </div>
-    );
+    return <Dashboard />
 };
 
 export default DashboardPage;
