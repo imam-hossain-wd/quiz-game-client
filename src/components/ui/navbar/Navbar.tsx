@@ -26,7 +26,7 @@ const Navbar = () => {
         <div>
           <div className="flex flex-col">
             <Button type="text">
-              <Link href={`/dashboard/account`}> Account</Link>
+              <Link href={`/dashboard/${role}/account`}> Account</Link>
             </Button>
             <Button
               onClick={() => {
