@@ -18,7 +18,13 @@ export const quizApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getSingleQuiz: builder.query({
+      query: (categoryId) => ({
+        url: `/quiz/?category=${categoryId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
-export const { useCreateQuizMutation, useGetQuizQuery } = quizApi;
+export const { useCreateQuizMutation, useGetQuizQuery, useGetSingleQuizQuery } = quizApi;
