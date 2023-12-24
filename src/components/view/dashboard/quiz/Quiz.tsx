@@ -5,6 +5,8 @@ import { EyeOutlined, FolderAddOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Loading from "../../loading/Loading";
 import Image from "next/image";
+import QuizCart from "@/components/ui/quizCart/QuizCart";
+import { Button } from "antd";
 
 const Quiz = () => {
   const { data, isLoading } = useGetQuizQuery(undefined);
@@ -12,19 +14,18 @@ const Quiz = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(data?.data, "quiz data....");
-
-  const {name, image, category}= data?.data;
-  console.log(name, image, category);
-
   const categoryDatas = data?.data;
 
   return (
     <div>
+      <div className="grid grid-cols-1 mt-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {categoryDatas &&
+          categoryDatas.map((category: any) => (
+            <QuizCart key={category.id} category={category} />
+            
+          ))}
 
-
-
-
+      </div>
     </div>
     // <div className="flex flex-col mt-10 justify-items-center lg:flex-row justify-around">
     //     <Link href="/dashboard/admin/quiz/view" className="w-full md:w-80 lg:w-80 h-44 rounded bg-green-400 ">
