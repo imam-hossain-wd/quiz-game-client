@@ -27,10 +27,20 @@ export const sidebarItems = (role: string) => {
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-        label: <Link href={`/dashboard/${role}/perfomer`}>Perfomer</Link>,
-        key: `/${role}/account`,
-        icon: <UsergroupAddOutlined />
-      },
+      label: <Link href={`/dashboard/${role}/perfomer`}>Perfomer</Link>,
+      key: `/dashboard/${role}/perfomer`,
+      icon: <UsergroupAddOutlined />
+    },
+    {
+      label: <Link href={`/dashboard/admin/quiz`}>Quiz</Link>,
+      icon: <ScheduleOutlined />,
+      key: `/dashboard/${role}/quiz`,
+    },
+    {
+      label: <Link href={`/dashboard/${role}/perfomer`}>Score</Link>,
+      key: `/dashboard/${role}/score`,
+      icon: <UsergroupAddOutlined />
+    },
      
   ];
 

@@ -6,11 +6,11 @@ export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<IUser, string>({
       query: () => ({
-        url: `/users`,
+        url: `/user`,
         method: 'GET',
       }),
     }),
-    getSingleUser: builder.query<IUser, string>({
+    getSingleUser: builder.query({
       query: (userId) => ({
         url: `/user/${userId}`,
         method: 'GET',

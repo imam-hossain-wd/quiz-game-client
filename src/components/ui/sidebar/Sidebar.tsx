@@ -15,6 +15,7 @@ const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  console.log(collapsed, 'clpse');
   const { role } = getUserInfo() as any;
   return (
     <Sider
@@ -27,7 +28,8 @@ const SideBar = () => {
       theme="light"
       trigger={
         <div className="trigger text-3xl">
-          {collapsed ? <RightSquareOutlined /> : <LeftSquareOutlined />}
+          {collapsed ? <RightSquareOutlined /> :
+          !collapsed ? <div className="ml-20"><LeftSquareOutlined  /></div> : <LeftSquareOutlined  />}
         </div>
       }
       style={{
@@ -39,7 +41,7 @@ const SideBar = () => {
         bottom: 0,
       }}
     >
-      {!collapsed && <div className="hidden -mb-20 lg:flex flex flex-col justify-center items-center font-bold mb-2 py-3">
+      {!collapsed && <div className="-mb-16 lg:flex flex flex-col justify-center items-center font-bold mb-2 py-3">
         <Avatar size={80} icon={<UserOutlined />} />
         <p className="text-xl  mt-3">Imam Hossain</p>
       </div>}
