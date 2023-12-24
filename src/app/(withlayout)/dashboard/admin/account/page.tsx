@@ -1,9 +1,10 @@
 import Account from "@/components/view/dashboard/account/Account";
-import { useGetUserQuery } from "@/redux/api/userApi";
+import { useGetSingleUserQuery, useGetUserQuery } from "@/redux/api/userApi";
+import { getUserInfo } from "@/utils/auth.services";
 
 
 const AdminAccount = () => {
-    const { data: userData, error, isLoading } = useGetUserQuery('123');
+
     return <Account />
 };
 
