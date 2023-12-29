@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setAccessToken } from "@/redux/slice/authSlice";
 import { authKey, getUserInfo } from "@/utils/auth.services";
 import { getFromLocalStorage } from "@/utils/localStorage";
-import { Button, message } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import {  message } from "antd";
+import {  useRouter } from "next/navigation";
 
 
 const HomePage = () => {
@@ -54,7 +54,6 @@ const HomePage = () => {
         className="w-40 h-10 text-lg font-semibold mt-5"
       />
        </div>
-   
     </div>
   );
 };

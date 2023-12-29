@@ -2,7 +2,7 @@
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import StyledComponentsRegistry from "./AntdRegistry";
-import Navbar from "@/components/ui/navbar/Navbar";
+
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,3 +13,5 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default Providers;
+
+

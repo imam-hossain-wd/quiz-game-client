@@ -29,7 +29,8 @@ const Dashboard = () => {
                     <p className="font-bold mt-3 text-3xl">Total Score</p>
                 </div>
             </Link>
-            <Link href={`/dashboar`} className="w-80 h-44 rounded bg-sky-400 ">
+          
+            <Link href="/dashboard/admin/quiz" className="w-80 h-44 rounded bg-sky-400 ">
                
                 <div className="text-white flex justify-center flex-col items-center mt-8">
                     <p className="text-4xl"><ContainerOutlined /></p>
