@@ -4,9 +4,9 @@ import SingleQuiz from "@/components/view/singleQuiz/SingleQuiz";
 
 const SingleCategory = ({params}:any) => {
 
-    // console.log(params.singleCategoryQuiz[0],'params');
+    // console.log(params.singleCategoryQuiz,'params');
 
-    const quizCategory = params.singleCategoryQuiz[0]
+    const quizCategory = params.singleCategoryQuiz
     return <SingleQuiz quizCategory={quizCategory}/>
 };
 

@@ -20,6 +20,7 @@ const QuizCategory = () => {
   }
   const categoryDatas = data?.data;
 
+
   return (
     <div>
       <div className="w-[90%] mx-auto grid grid-cols-1 mt-20 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -28,7 +29,7 @@ const QuizCategory = () => {
             <div className="bg-white shadow-lg px-2 py-5" key={category.id}>
               <Image
                 className="rounded w-full"
-                src={category.image}
+                src={category?.image}
                 width={280}
                 height={250}
                 alt={category.name}

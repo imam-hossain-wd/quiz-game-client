@@ -1,55 +1,54 @@
-"use client"
+"use client";
 
 import StepperForm from "@/components/ui/stepperForm/StepperForm";
 import { useAppSelector } from "@/redux/hooks";
 
-import QuizContent from './QuizContent'
+import QuizContent from "./QuizContent";
 import Loading from "../../loading/Loading";
 import { useGetSingleQuizQuery } from "@/redux/api/quizApi";
-const StartQuiz = () => {
-    
-  const {data, isLoading}= useGetSingleQuizQuery('full-stack')
-  // console.log(data?.data[0]?.questions
-  //   , 'category data...');
 
-    const quizData = data?.data[0]?.questions;
-    if(isLoading){
-      <Loading />
-    }
-  // const quizState  = useAppSelector((state)=> state.quiz)
+const StartQuiz = ({ category }: any) => {
 
-  // const quizzes = quizState?.quizData;
-
- quizData?.map((quiz: any) => (console.log(quiz)))
-// let steps = quizData && quizData?.length > 0
-//   ? 
-//       title: ``,
-//       content: <QuizContent quizData={quiz} />,
-//     }))
-//   : <Loading />;
-//   console.log(steps, 'steps');
-
-        // const handleStudentSubmit = async (values: any) => {
-        //   console.log(values, 'values form....');
-        //   try {
-   
-        //   } catch (err: any) {
-        //     console.error(err.message);
-        //   }
-        // };
+  const { data, isLoading } = useGetSingleQuizQuery(category);
   
-      return (
-          <div>
-              {/* <StepperForm     persistKey="student-create-form"
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const quizData = data?.data[0]?.quizOptions;
+  
+    const quizSteps = quizData?.map((quizItem:any, index:number) => ({
+      title: ``,
+      content: <QuizContent quizData={quizItem} />
+    })) || [];
+  
+    const steps = [
+      ...quizSteps,
+    ];
+
+
+
+  const handleStudentSubmit = async (values: any) => {
+    console.log(values, 'values form....');
+    try {
+
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <StepperForm     persistKey="student-create-form"
           submitHandler={(value) => {
             handleStudentSubmit(value);
           }}
-          steps={steps}/> */}
-          quizzzzdess
+          steps={steps}/>
+      quizzzzdess
+      {category}
+    </div>
+  );
+};
 
-          </div>
-      );
-    };
-
-    export default StartQuiz;
-   
+export default StartQuiz;

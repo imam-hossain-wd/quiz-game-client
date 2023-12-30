@@ -1,16 +1,19 @@
-// "use client";
+"use client";
 
 const QuizContent = ({ quizData }: any) => {
+// console.log(quizData, 'quizData quizDataquizData');
+const {a,b,c,d, correct,question} = quizData
 
-//   const quizOptions = quizData?.options?.map((option: any) => (
-//     <div key={option?.id}>
-//       <li>{option?.title}</li>
-//     </div>
-//   ));
   return (
     <div className="mt-10 mx-auto h-[200px] w-[700px]">
-        {/* {quizOptions} */}
-      hello
+
+        <h3>{question}</h3>
+        <p>{a}</p>
+        <p>{b}</p>
+        <p>{c}</p>
+        <p>{d}</p>
+        <p>{correct}</p>
+
     </div>
   );
 };

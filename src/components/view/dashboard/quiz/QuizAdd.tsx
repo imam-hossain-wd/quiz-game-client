@@ -3,7 +3,7 @@
 import QuizInfo from "@/components/ui/quizForm/QuizInfo";
 import QuizOptions from "@/components/ui/quizForm/QuizOptions";
 import StepperForm from "@/components/ui/stepperForm/StepperForm";
-import { message } from "antd";
+
 
 
 const QuizAdd = () => {
