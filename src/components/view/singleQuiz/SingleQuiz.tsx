@@ -5,14 +5,13 @@ import Loading from "../loading/Loading";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setQuizData } from "@/redux/slice/quizSlice";
+
 
 const SingleQuiz = ({ quizCategory }: any) => {
   // console.log(quizCategory, 'quizCategory name');
 
   const dispatch = useAppDispatch();
-  const quizData = useAppSelector((state) => state?.quiz?.quizData);
-  console.log(quizData, "hello wuiz datas..");
+
 
   const { data, isLoading } = useGetSingleQuizQuery(quizCategory);
   if (isLoading) {
@@ -25,7 +24,7 @@ const SingleQuiz = ({ quizCategory }: any) => {
   const question = data?.data[0]?.quizOptions;
 
   const handleSetQuestion = async () => {
-    dispatch(setQuizData(question));
+    // dispatch(setQuizData(question));
   };
 
   return (
