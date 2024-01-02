@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface IInitialStateProps {
   current:number,
-  ans:string,
+  ans:null,
   correct:number,
   showResultPage:boolean
 }
@@ -12,7 +12,7 @@ interface IInitialStateProps {
 
 const initialState:IInitialStateProps = {
   current: 0,
-  ans: '',
+  ans: null,
   correct: 0,
   showResultPage: false,
 }

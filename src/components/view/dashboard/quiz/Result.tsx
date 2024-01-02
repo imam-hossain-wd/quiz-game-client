@@ -20,12 +20,12 @@ const QuizResult = () => {
     dispatch(setCurrent(0));
     dispatch(setCorrect(0));
     dispatch(resetQuizTime());
-    dispatch(setAns(''));
+    dispatch(setAns(null));
   };
   const categoryHandler = ()=> {
     router.push("/quiz-category");
     dispatch(setShowResultPage(false));
-    dispatch(setAns(''));
+    dispatch(setAns(null));
     dispatch(setCurrent(0));
     dispatch(setCorrect(0));
     dispatch(resetQuizTime());

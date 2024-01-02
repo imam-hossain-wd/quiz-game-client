@@ -73,9 +73,13 @@ const StartQuiz = ({ category }: any) => {
         dispatch(setCorrect(correct + 1));
       }
       nextQuestionHandler();
-    } else {
+    }
+    //  else {
+    //   message.error("Please select an answer");
+    //   return;
+    // }
+    if(ans === null){
       message.error("Please select an answer");
-      return;
     }
   };
 
@@ -100,6 +104,7 @@ const StartQuiz = ({ category }: any) => {
   const finishHandler = () => {
     if (ans !== null) {
       saveHandler();
+      message.success("You have complete all questions")
       dispatch(setShowResultPage(true));
     } else {
       message.error("Please select an answer");
