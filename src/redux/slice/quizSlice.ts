@@ -1,15 +1,25 @@
 // store/quizSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
+
+interface IInitialStateProps {
+  current:number,
+  ans:string,
+  correct:number,
+  showResultPage:boolean
+}
+
+
+const initialState:IInitialStateProps = {
+  current: 0,
+  ans: '',
+  correct: 0,
+  showResultPage: false,
+}
+
 export const quizSlice = createSlice({
   name: 'quiz',
-  initialState: {
-    current: 0,
-    ans: '',
-    correct: 0,
-    showResultPage: false,
-    activeNextButton: false,
-  },
+  initialState,
   reducers: {
     setCurrent: (state, action) => {
       state.current = action.payload;
@@ -23,12 +33,9 @@ export const quizSlice = createSlice({
     setShowResultPage: (state, action) => {
       state.showResultPage = action.payload;
     },
-    setActiveNextButton: (state, action) => {
-      state.showResultPage = action.payload;
-    },
   },
 });
 
-export const { setCurrent, setAns, setCorrect, setShowResultPage, setActiveNextButton } = quizSlice.actions;
+export const { setCurrent, setAns, setCorrect, setShowResultPage} = quizSlice.actions;
 
 export default quizSlice.reducer;

@@ -11,7 +11,6 @@ import {
   setAns,
   setCorrect,
   setShowResultPage,
-  setActiveNextButton,
 } from "@/redux/slice/quizSlice";
 import { useEffect, useRef } from "react";
 import {
@@ -24,10 +23,13 @@ const StartQuiz = ({ category }: any) => {
   const dispatch = useAppDispatch();
   const { timeLeft, totalTime } = useAppSelector((state) => state.timeCounter);
 
-  const { current, ans, correct, showResultPage, activeNextButton } =
+  const { current, ans, correct, showResultPage } =
     useAppSelector((state) => state.quiz);
   const { data, isLoading } = useGetSingleQuizQuery(category);
   const totalTimeIntervalRef = useRef<NodeJS.Timeout>();
+
+ 
+
 
   useEffect(() => {
     let intervalId: any;
@@ -59,26 +61,25 @@ const StartQuiz = ({ category }: any) => {
     };
   }, [dispatch, showResultPage]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
 
-  const resultPage = <QuizResult />;
   const quizData = data?.data[0]?.quizOptions;
   const QuizName = data?.data[0]?.name;
+  const resultPage = <QuizResult />;
 
+  //save button handler 
   const saveHandler = () => {
-    if (ans === null) {
+    if (ans !== null ) {
+      if (ans === quizData[current]?.correct) {
+        dispatch(setCorrect(correct + 1));
+      }
+      nextQuestionHandler();
+    } else {
       message.error("Please select an answer");
       return;
     }
-
-    if (ans === quizData[current]?.correct) {
-      dispatch(setCorrect(correct + 1));
-    }
-    nextQuestionHandler();
   };
 
+  // next Question button handler 
   const nextQuestionHandler = () => {
     if (current < 9) {
       dispatch(setCurrent(current + 1));
@@ -89,10 +90,13 @@ const StartQuiz = ({ category }: any) => {
     }
   };
 
+  // previous button handler 
   const previousHandler = () => {
     dispatch(setCurrent(current - 1));
   };
 
+
+  // finish button handler 
   const finishHandler = () => {
     if (ans !== null) {
       saveHandler();
@@ -101,7 +105,13 @@ const StartQuiz = ({ category }: any) => {
       message.error("Please select an answer");
     }
   };
-  
+
+  //loading 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+
   return !showResultPage ? (
     <div className="flex justify-center items-center h-screen -mt-10">
       <div className="w-full md:w-[80%] lg:w-[60%] bg-white shadow-2xl p-10 rounded">

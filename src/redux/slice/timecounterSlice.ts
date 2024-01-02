@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+
+interface ITimeCounterProps {
+  timeLeft: number, 
+  totalTime: number
+}
+
+const initialState: ITimeCounterProps = {
   timeLeft: 30, // Time left for the current question
   totalTime: 0, // Total time taken for the quiz
 };
