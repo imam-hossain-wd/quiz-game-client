@@ -3,25 +3,31 @@
 
 import Loading from "../../loading/Loading";
 import { useGetSingleQuizQuery } from "@/redux/api/quizApi";
-import { Button, Slider } from "antd";
+import { Button, Slider, message } from "antd";
 import QuizResult from "./Result";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {setCurrent,setAns,setCorrect,setShowResultPage} from "@/redux/slice/quizSlice";
+import {
+  setCurrent,
+  setAns,
+  setCorrect,
+  setShowResultPage,
+  setActiveNextButton,
+} from "@/redux/slice/quizSlice";
 import { useEffect, useRef } from "react";
-import { incrementTotalTime, resetQuizTime, setTimeLeft } from "@/redux/slice/timecounterSlice";
-
+import {
+  incrementTotalTime,
+  resetQuizTime,
+  setTimeLeft,
+} from "@/redux/slice/timecounterSlice";
 
 const StartQuiz = ({ category }: any) => {
-
   const dispatch = useAppDispatch();
-  const {timeLeft,totalTime} = useAppSelector((state) => state.timeCounter);
+  const { timeLeft, totalTime } = useAppSelector((state) => state.timeCounter);
 
-  const { current, ans, correct, showResultPage } = useAppSelector(
-    (state) => state.quiz
-  );
+  const { current, ans, correct, showResultPage, activeNextButton } =
+    useAppSelector((state) => state.quiz);
   const { data, isLoading } = useGetSingleQuizQuery(category);
   const totalTimeIntervalRef = useRef<NodeJS.Timeout>();
-
 
   useEffect(() => {
     let intervalId: any;
@@ -52,15 +58,21 @@ const StartQuiz = ({ category }: any) => {
       }
     };
   }, [dispatch, showResultPage]);
-  
+
   if (isLoading) {
     return <Loading />;
   }
 
   const resultPage = <QuizResult />;
   const quizData = data?.data[0]?.quizOptions;
-  
+  const QuizName = data?.data[0]?.name;
+
   const saveHandler = () => {
+    if (ans === null) {
+      message.error("Please select an answer");
+      return;
+    }
+
     if (ans === quizData[current]?.correct) {
       dispatch(setCorrect(correct + 1));
     }
@@ -68,7 +80,7 @@ const StartQuiz = ({ category }: any) => {
   };
 
   const nextQuestionHandler = () => {
-    if (current < 9) { 
+    if (current < 9) {
       dispatch(setCurrent(current + 1));
       dispatch(setAns(null));
       dispatch(setTimeLeft(30));
@@ -81,83 +93,95 @@ const StartQuiz = ({ category }: any) => {
     dispatch(setCurrent(current - 1));
   };
 
-
+  const finishHandler = () => {
+    if (ans !== null) {
+      saveHandler();
+      dispatch(setShowResultPage(true));
+    } else {
+      message.error("Please select an answer");
+    }
+  };
+  
   return !showResultPage ? (
-    <div className="w-[60%] mx-auto mt-20 bg-white shadow-2xl p-10 rounded">
-      <div>
-        <div className="flex justify-around text-xl font-bold">
-          <p>Total Time: {totalTime}</p>
-         <p>Time Left:  {timeLeft}</p>
-        </div>
-        <Slider
-        className="time-left-slider"
-      min={0}
-      max={30} 
-      value={timeLeft}
-      disabled={true}
-    />
-        <h2 className="h-16">
-          {current + 1 + ". " + quizData[current]?.question}
-        </h2>
+    <div className="flex justify-center items-center h-screen -mt-10">
+      <div className="w-full md:w-[80%] lg:w-[60%] bg-white shadow-2xl p-10 rounded">
+        <div>
+          <div className=" -mt-2 flex justify-between text-xl p-3 rounded">
+            <p>{QuizName} Quiz</p>
+            <p>Total Quiz : {quizData?.length} </p>
+          </div>
+          <div className="flex justify-between text-lg font-semibold">
+            <p>Total Time: {totalTime}</p>
+            <p>Time Left: {timeLeft}</p>
+          </div>
+          <Slider
+            className="time-left-slider"
+            min={0}
+            max={30}
+            value={timeLeft}
+            disabled={true}
+          />
+          <h3 className="h-full lg:h-16">
+            {current + 1 + ". " + quizData[current]?.question}
+          </h3>
 
-        <div className="h-44 ">
-          <div className="grid grid-cols-2 mt-3">
-            <div
-              className={`p-2 border ${
-                ans === "a" ? "bg-blue-400 text-white" : ""
-              } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-              onClick={() => dispatch(setAns("a"))}
-            >
-              A :{quizData[current]?.a}
-            </div>
-            <div
-              className={`p-2 border ${
-                ans === "b" ? "bg-blue-400 text-white" : ""
-              } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-              onClick={() => dispatch(setAns("b"))}
-            >
-              B : {quizData[current]?.b}
-            </div>
-            <div
-              className={`p-2 border ${
-                ans === "c" ? "bg-blue-400 text-white" : ""
-              } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-              onClick={() => dispatch(setAns("c"))}
-            >
-              C : {quizData[current]?.c}
-            </div>
-            <div
-              className={`p-2 border ${
-                ans === "d" ? "bg-blue-400 text-white" : ""
-              } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
-              onClick={() => dispatch(setAns("d"))}
-            >
-              D :{quizData[current]?.d}
+          <div className="h-44 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 mt-3">
+              <div
+                style={{ border: "1px solid gray", padding: "10px" }}
+                className={`${
+                  ans === "a" ? "bg-blue-400 text-white" : ""
+                } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
+                onClick={() => dispatch(setAns("a"))}
+              >
+                A : {quizData[current]?.a}
+              </div>
+              <div
+                style={{ border: "1px solid gray", padding: "10px" }}
+                className={`${
+                  ans === "b" ? "bg-blue-400 text-white" : ""
+                } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
+                onClick={() => dispatch(setAns("b"))}
+              >
+                B : {quizData[current]?.b}
+              </div>
+              <div
+                style={{ border: "1px solid gray", padding: "10px" }}
+                className={`${
+                  ans === "c" ? "bg-blue-400 text-white" : ""
+                } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
+                onClick={() => dispatch(setAns("c"))}
+              >
+                C : {quizData[current]?.c}
+              </div>
+              <div
+                style={{ border: "1px solid gray", padding: "10px" }}
+                className={`${
+                  ans === "d" ? "bg-blue-400 text-white" : ""
+                } hover:bg-blue-400 hover:text-white duration-200 cursor-pointer`}
+                onClick={() => dispatch(setAns("d"))}
+              >
+                D : {quizData[current]?.d}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex justify-center">
-          {current > 0 && (
-            <div className="">
-              <Button onClick={previousHandler}>Previous</Button>
-            </div>
-          )}
+          <div className="flex justify-end -mt-2">
+            {current > 0 && (
+              <div className="mr-5">
+                <Button onClick={previousHandler}>Previous</Button>
+              </div>
+            )}
 
-          {current === 9 ? (
-            <div
-              onClick={() => {
-                saveHandler();
-                dispatch(setShowResultPage(true))
-              }}
-              className=""
-            >
-              <Button>Finish</Button>
-            </div>
-          ) : (
-            <div className="">
-              <Button onClick={saveHandler}>Save And Next</Button>
-            </div>
-          )}
+            {current === 9 ? (
+              <div onClick={finishHandler} className="">
+                <Button>Finish</Button>
+              </div>
+            ) : (
+              <div className="">
+                <Button onClick={saveHandler}>Save And Next</Button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

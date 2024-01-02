@@ -16,7 +16,7 @@ const timeCounterSlice = createSlice({
       state.totalTime += 1;
     },
     resetQuizTime: (state) => {
-      state.timeLeft = 3;
+      state.timeLeft = 30;
       state.totalTime = 0;
     },
   },

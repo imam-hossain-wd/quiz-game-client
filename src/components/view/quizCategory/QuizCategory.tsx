@@ -6,7 +6,6 @@ import { useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "../loading/Loading";
-import QuizCart from "@/components/ui/quizCart/QuizCart";
 import { useGetQuizQuery } from "@/redux/api/quizApi";
 
 const QuizCategory = () => {

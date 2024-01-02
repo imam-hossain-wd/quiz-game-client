@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 
 const SingleQuiz = ({ quizCategory }: any) => {
-  // console.log(quizCategory, 'quizCategory name');
 
   const dispatch = useAppDispatch();
 

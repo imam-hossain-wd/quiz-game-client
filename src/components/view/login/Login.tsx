@@ -33,6 +33,7 @@ const Login = () => {
       const res = await logInUser(loginData);
       //@ts-ignore
       const result = res?.data;
+      console.log(result, 'login')
       if (result?.success === true && result?.token) {
         message.success(result.message);
         storeUserInto({ accessToken: result.token });

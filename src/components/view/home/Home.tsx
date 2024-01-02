@@ -31,7 +31,7 @@ const HomePage = () => {
 
 
   return (
-    <div className="flex w-3/6 mx-auto mt-5 flex-col justify-center items-center">
+    <div className="flex w-3/6 mx-auto -mt-20 flex-col justify-center items-center h-screen">
       <h1
         style={{ border: "5px solid green" }}
         className="text-center mb-3 p-7 w-full"

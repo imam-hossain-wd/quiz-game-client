@@ -8,6 +8,7 @@ export const quizSlice = createSlice({
     ans: '',
     correct: 0,
     showResultPage: false,
+    activeNextButton: false,
   },
   reducers: {
     setCurrent: (state, action) => {
@@ -22,9 +23,12 @@ export const quizSlice = createSlice({
     setShowResultPage: (state, action) => {
       state.showResultPage = action.payload;
     },
+    setActiveNextButton: (state, action) => {
+      state.showResultPage = action.payload;
+    },
   },
 });
 
-export const { setCurrent, setAns, setCorrect, setShowResultPage } = quizSlice.actions;
+export const { setCurrent, setAns, setCorrect, setShowResultPage, setActiveNextButton } = quizSlice.actions;
 
 export default quizSlice.reducer;
